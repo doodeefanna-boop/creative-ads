@@ -6,71 +6,109 @@
     <title>Creative Ads Manager by Grok</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom animations */
+        :root {
+            --primary: #4f46e5; /* Indigo */
+            --secondary: #7c3aed; /* Purple */
+            --accent: #10b981; /* Emerald */
+            --bg-light: #f9fafb;
+            --bg-dark: #1e1b4b;
+        }
+        body {
+            background: linear-gradient(to bottom, var(--bg-light), #e0e7ff);
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .fade-in { animation: fadeIn 0.3s ease-in-out; }
-        /* Dark mode support */
         @media (prefers-color-scheme: dark) {
-            body { background-color: #1f2937; color: #f3f4f6; }
-            .bg-white { background-color: #374151; }
+            body { background: linear-gradient(to bottom, var(--bg-dark), #312e81); color: #e0e7ff; }
+            .bg-white { background-color: #2d3748; }
             .text-gray-800 { color: #e5e7eb; }
             .bg-gray-100 { background-color: #4b5563; }
+            .bg-blue-50 { background-color: #4f46e5; }
         }
-        /* Scrollbar styling */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #007bff; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #0056b3; }
+        ::-webkit-scrollbar-track { background: var(--bg-light); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
+        .gradient-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        .preview-box {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+        }
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .container { padding: 1rem; }
+            nav button { flex: 1 1 100%; }
+            .preview-box { padding: 1rem; }
+            .space-y-4 > * + * { margin-top: 1rem; }
+            select[multiple] { height: 120px; }
+        }
+        select[multiple] {
+            height: 100px;
+            padding: 0.5rem;
+        }
     </style>
 </head>
-<body class="min-h-screen bg-gray-50 font-sans antialiased">
-    <div class="container mx-auto p-6 max-w-4xl">
+<body class="min-h-screen font-sans antialiased">
+    <div class="container mx-auto p-6 max-w-5xl">
         <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-blue-600 mb-2">Creative Ads Manager by Grok</h1>
-            <p class="text-gray-600">สร้างคอนเทนต์โฆษณาสุดปัง! หยุดนิ้ว กระตุ้นยอดขายทันที<br>
-                <a href="#" onclick="alert('บันทึกไฟล์นี้เป็น index.html แล้วเปิดในเบราว์เซอร์!')" class="text-blue-500 underline">https://grok-creative-ads.xai/app</a><br>
-                <span class="text-sm text-gray-500">ใช้ AI ฟรี: <a href="https://gemini.google.com" target="_blank" class="text-blue-500">Gemini</a> (Text), <a href="https://raphael.app" target="_blank" class="text-blue-500">Raphael AI</a> (Image), <a href="https://www.veed.io/tools/ai-video" target="_blank" class="text-blue-500">VEED.IO</a> (Video). ข้อมูลอัพเดท 2025, same face 100% ด้วย character lock.</span>
+            <h1 class="text-3xl sm:text-4xl font-bold text-indigo-600 mb-2">Creative Ads Manager by Grok</h1>
+            <p class="text-gray-600 text-sm sm:text-base">กรอกข้อมูลครั้งเดียว หรือใช้ Prompt Templates สร้างคอนเทนต์ปัง! หยุดนิ้ว กระตุ้นยอดขาย<br>
+                <a href="#" onclick="alert('บันทึกไฟล์นี้เป็น index.html แล้วเปิดในเบราว์เซอร์!')" class="text-indigo-500 underline">https://grok-creative-ads.xai/app</a><br>
+                <span class="text-xs sm:text-sm text-gray-500">ใช้ AI ฟรี: <a href="https://gemini.google.com" target="_blank" class="text-indigo-500">Gemini</a> (Text), <a href="https://raphael.app" target="_blank" class="text-indigo-500">Raphael AI</a> (Image), <a href="https://www.veed.io/tools/ai-video" target="_blank" class="text-indigo-500">VEED.IO</a> (Video). อัพเดท 2025, same face 100%.</span>
             </p>
         </header>
 
         <!-- Menu -->
-        <nav class="flex flex-wrap gap-4 mb-8 justify-center">
-            <button onclick="showSection('mainForm')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 fade-in">1. ฟอร์มข้อมูลสินค้า</button>
-            <button onclick="showSection('caption')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 fade-in">2. Caption FB</button>
-            <button onclick="showSection('videoPrompt')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 fade-in">3. Video Prompt</button>
-            <button onclick="showSection('imagePrompt')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 fade-in">4. Image Prompt</button>
-            <button onclick="showSection('voiceScript')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 fade-in">5. Voice Script</button>
-            <button onclick="showSection('upload')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 fade-in">6. อัพรูปภาพ</button>
-            <button onclick="showSection('character')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 fade-in">7. Character Builder</button>
-            <button onclick="generateAll()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-200 fade-in">Generate All</button>
+        <nav class="flex flex-wrap gap-2 sm:gap-4 mb-8 justify-center">
+            <button onclick="showSection('mainForm')" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 fade-in text-sm sm:text-base">1. ฟอร์มข้อมูล</button>
+            <button onclick="showSection('caption')" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 fade-in text-sm sm:text-base">2. Caption FB</button>
+            <button onclick="showSection('videoPrompt')" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 fade-in text-sm sm:text-base">3. Video Prompt</button>
+            <button onclick="showSection('imagePrompt')" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 fade-in text-sm sm:text-base">4. Image Prompt</button>
+            <button onclick="showSection('voiceScript')" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 fade-in text-sm sm:text-base">5. Voice Script</button>
+            <button onclick="showSection('upload')" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 fade-in text-sm sm:text-base">6. อัพรูปภาพ</button>
+            <button onclick="showSection('character')" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 fade-in text-sm sm:text-base">7. Character Builder</button>
+            <button onclick="showPreview()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-200 fade-in text-sm sm:text-base">Preview ข้อมูล</button>
+            <button onclick="generateAll()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-200 fade-in text-sm sm:text-base">Generate All</button>
         </nav>
 
+        <!-- Preview Section -->
+        <div id="preview" class="bg-white p-4 sm:p-6 rounded-lg shadow-lg mb-8 fade-in hidden preview-box">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Preview ข้อมูลก่อน Generate</h2>
+            <div id="previewContent" class="space-y-2 text-sm sm:text-base"></div>
+            <div class="mt-4 flex gap-4 flex-col sm:flex-row">
+                <button onclick="showSection('mainForm')" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition duration-200">แก้ไขข้อมูล</button>
+                <button onclick="generateAll()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-200">ยืนยัน & Generate All</button>
+            </div>
+        </div>
+
         <!-- Main Form -->
-        <div id="mainForm" class="bg-white p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">ฟอร์มข้อมูลสินค้าหลัก</h2>
+        <div id="mainForm" class="bg-white p-4 sm:p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">ฟอร์มข้อมูลสินค้าหลัก (กรอกครั้งเดียว)</h2>
             <form id="productForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">ชื่อสินค้า:</label>
-                    <input type="text" id="productName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g. สกินแคร์ยอดฮิต">
+                    <label class="block text-sm font-medium text-gray-700">ชื่อสินค้า: <span class="text-red-500">*</span></label>
+                    <input type="text" id="productName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base" placeholder="e.g. สกินแคร์ยอดฮิต" required>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">รายละเอียดสินค้า:</label>
-                    <textarea id="productDesc" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="อธิบายคุณสมบัติ..."></textarea>
+                    <label class="block text-sm font-medium text-gray-700">รายละเอียดสินค้า: <span class="text-red-500">*</span></label>
+                    <textarea id="productDesc" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base" placeholder="อธิบายคุณสมบัติ..." required></textarea>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">ฉากพื้นหลัง/นางแบบ/นายแบบ (same face):</label>
-                    <textarea id="modelDesc" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g. หญิงสาวเอเชีย 25 ปี ผมยาวดำ ตาสดใส"></textarea>
+                    <label class="block text-sm font-medium text-gray-700">ฉากพื้นหลัง/นางแบบ/นายแบบ (same face): <span class="text-red-500">*</span></label>
+                    <textarea id="modelDesc" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base" placeholder="e.g. หญิงสาวเอเชีย 25 ปี ผมยาวดำ ตาสดใส" required></textarea>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">กลุ่มเป้าหมาย:</label>
-                    <input type="text" id="targetAudience" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g. สาวๆวัย 20-30">
+                    <label class="block text-sm font-medium text-gray-700">กลุ่มเป้าหมาย: <span class="text-red-500">*</span></label>
+                    <input type="text" id="targetAudience" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base" placeholder="e.g. สาวๆวัย 20-30" required>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">โทนภาพรวม:</label>
-                    <select id="tone" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    <select id="tone" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base">
                         <option value="Modern (โมเดิร์น)">Modern (โมเดิร์น)</option>
                         <option value="Elegant">Elegant</option>
                         <option value="Luxe (หรูหรา)">Luxe (หรูหรา)</option>
@@ -90,8 +128,8 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">บริบท (เลือกหลาย):</label>
-                    <select id="context" multiple class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    <label class="block text-sm font-medium text-gray-700">บริบท (เลือกหลาย, กด Ctrl หรือแตะเพื่อเลือก): <span class="text-red-500">*</span></label>
+                    <select id="context" multiple class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base">
                         <option value="beauty">Beauty/Skincare</option>
                         <option value="tech">Tech/Gadgets</option>
                         <option value="food">Food/Health</option>
@@ -101,7 +139,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">เป้าหมาย Scene 1:</label>
-                    <select id="scene1" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    <select id="scene1" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base">
                         <option value="Hook Scene (ฉากดึงดูดความสนใจ)">Hook Scene (ฉากดึงดูดความสนใจ)</option>
                         <option value="Problem Scene (ฉากแสดงปัญหา)">Problem Scene (ฉากแสดงปัญหา)</option>
                         <option value="Solution / Product Reveal Scene (ฉากเปิดตัวสินค้า)">Solution / Product Reveal Scene (ฉากเปิดตัวสินค้า)</option>
@@ -114,7 +152,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">เป้าหมาย Scene 2:</label>
-                    <select id="scene2" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    <select id="scene2" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base">
                         <option value="Solution / Product Reveal Scene (ฉากเปิดตัวสินค้า)">Solution / Product Reveal Scene (ฉากเปิดตัวสินค้า)</option>
                         <option value="Demonstration Scene (ฉากสาธิตการใช้งาน)">Demonstration Scene (ฉากสาธิตการใช้งาน)</option>
                         <option value="Lifestyle / Aspirational Scene (ฉากชีวิตในอุดมคติ)">Lifestyle / Aspirational Scene (ฉากชีวิตในอุดมคติ)</option>
@@ -123,7 +161,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">มุมกล้อง Scene 1:</label>
-                    <select id="camera1" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    <select id="camera1" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base">
                         <option value="Close-Up">Close-Up</option>
                         <option value="Medium Shot">Medium Shot</option>
                         <option value="Wide Shot">Wide Shot</option>
@@ -136,83 +174,98 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">มุมกล้อง Scene 2:</label>
-                    <select id="camera2" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    <checkbox id="camera2" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base">
                         <option value="Medium Shot">Medium Shot</option>
                         <option value="Wide Shot">Wide Shot</option>
                         <option value="Slow Zoom">Slow Zoom</option>
                         <option value="360 Spin">360 Spin</option>
-                    </select>
+                    </checkbox>
                 </div>
-                <button type="button" onclick="saveProductData()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">บันทึกข้อมูล</button>
+                <div class="flex gap-4 flex-col sm:flex-row">
+                    <button type="button" onclick="saveProductData()" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 text-sm sm:text-base">บันทึกข้อมูล</button>
+                    <button type="button" onclick="showPreview()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-200 text-sm sm:text-base">Preview ข้อมูล</button>
+                </div>
             </form>
-            <p class="text-sm text-gray-500 mt-4">คำแนะนำ: กรอกข้อมูลให้ครบเพื่อเชื่อมต่อทุกเมนู. รีวิวออกแบบให้เหมือนผู้ใช้จริง สนับสนุน trends 2025 เช่น sustainable, AI-integrated products.</p>
+            <p class="text-xs sm:text-sm text-gray-500 mt-4">กรอกข้อมูลที่ <span class="text-red-500">*</span> เพื่อเชื่อมต่อทุกเมนู หรือใช้ templates สำเร็จรูปด้านล่าง. <span id="formStatus" class="text-indigo-600"></span></p>
         </div>
 
         <!-- Caption -->
-        <div id="caption" class="bg-white p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Facebook Caption Generator</h2>
-            <button onclick="generateCaption()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">Generate 3 Variations</button>
+        <div id="caption" class="bg-white p-4 sm:p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Facebook Caption Generator</h2>
+            <div class="flex gap-4 flex-col sm:flex-row mb-4">
+                <button onclick="generateCaption()" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 text-sm sm:text-base">Generate 3 Variations</button>
+                <button onclick="useCaptionTemplate()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-200 text-sm sm:text-base">ใช้ Template สำเร็จรูป</button>
+            </div>
             <div id="captionOutput" class="mt-4 space-y-4"></div>
         </div>
 
         <!-- Video Prompt -->
-        <div id="videoPrompt" class="bg-white p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Sora2 Video Prompt (ใช้ VEED.IO)</h2>
-            <p class="text-sm text-gray-500 mb-4">คัดลอก prompt ไปใช้ใน VEED.IO (free, no signup).</p>
-            <button onclick="generateVideoPrompt()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">Generate Powerful Prompt</button>
+        <div id="videoPrompt" class="bg-white p-4 sm:p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Sora2 Video Prompt (ใช้ VEED.IO)</h2>
+            <p class="text-xs sm:text-sm text-gray-500 mb-4">คัดลอก prompt ไปใช้ใน VEED.IO (free, no signup).</p>
+            <div class="flex gap-4 flex-col sm:flex-row mb-4">
+                <button onclick="generateVideoPrompt()" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 text-sm sm:text-base">Generate Powerful Prompt</button>
+                <button onclick="useVideoTemplate()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-200 text-sm sm:text-base">ใช้ Template สำเร็จรูป</button>
+            </div>
             <div id="videoOutput" class="mt-4"></div>
         </div>
 
         <!-- Image Prompt -->
-        <div id="imagePrompt" class="bg-white p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Image Prompt Generator</h2>
-            <button onclick="generateImagePrompt()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">Generate 3 Variations</button>
+        <div id="imagePrompt" class="bg-white p-4 sm:p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Image Prompt Generator</h2>
+            <div class="flex gap-4 flex-col sm:flex-row mb-4">
+                <button onclick="generateImagePrompt()" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 text-sm sm:text-base">Generate 3 Variations</button>
+                <button onclick="useImageTemplate()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-200 text-sm sm:text-base">ใช้ Template สำเร็จรูป</button>
+            </div>
             <div id="imageOutput" class="mt-4 space-y-4"></div>
         </div>
 
         <!-- Voice Script -->
-        <div id="voiceScript" class="bg-white p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Voice Review Script (ไทย, 35-50s)</h2>
-            <button onclick="generateVoiceScript()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">Generate 3 Variations</button>
+        <div id="voiceScript" class="bg-white p-4 sm:p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Voice Review Script (ไทย, 35-50s)</h2>
+            <div class="flex gap-4 flex-col sm:flex-row mb-4">
+                <button onclick="generateVoiceScript()" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 text-sm sm:text-base">Generate 3 Variations</button>
+                <button onclick="useVoiceTemplate()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-200 text-sm sm:text-base">ใช้ Template สำเร็จรูป</button>
+            </div>
             <div id="voiceOutput" class="mt-4 space-y-4"></div>
         </div>
 
         <!-- Upload -->
-        <div id="upload" class="bg-white p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">อัพรูปภาพ & วิเคราะห์</h2>
+        <div id="upload" class="bg-white p-4 sm:p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">อัพรูปภาพ & วิเคราะห์</h2>
             <form class="space-y-4">
-                <input type="file" id="imageFile" accept="image/*" onchange="previewImage()" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                <img id="imagePreview" class="max-w-xs max-h-64 mt-4 rounded-lg" style="display:none;">
-                <button type="button" onclick="analyzeImage()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">วิเคราะห์ & สร้าง Prompt</button>
+                <input type="file" id="imageFile" accept="image/*" onchange="previewImage()" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                <img id="imagePreview" class="max-w-full sm:max-w-xs max-h-64 mt-4 rounded-lg" style="display:none;">
+                <button type="button" onclick="analyzeImage()" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 text-sm sm:text-base">วิเคราะห์ & สร้าง Prompt</button>
             </form>
             <div id="imageAnalysis" class="mt-4"></div>
-            <p class="text-sm text-gray-500 mt-4">วิเคราะห์พื้นฐานด้วย JS, คัดลอกไป Gemini Vision สำหรับ advanced analysis.</p>
+            <p class="text-xs sm:text-sm text-gray-500 mt-4">วิเคราะห์พื้นฐานด้วย JS, คัดลอกไป Gemini Vision สำหรับ advanced analysis.</p>
         </div>
 
         <!-- Character Builder -->
-        <div id="character" class="bg-white p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Character Builder (Same Face)</h2>
+        <div id="character" class="bg-white p-4 sm:p-6 rounded-lg shadow-lg mb-8 fade-in hidden">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Character Builder (Same Face)</h2>
             <form id="charForm" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">ชื่อ Character:</label>
-                    <input type="text" id="charName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g. น้องมิว">
+                    <input type="text" id="charName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base" placeholder="e.g. น้องมิว">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">ลักษณะใบหน้า/อายุ/เชื้อชาติ:</label>
-                    <input type="text" id="faceDesc" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g. หญิงสาวเอเชีย 25 ปี ผมยาว">
+                    <input type="text" id="faceDesc" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base" placeholder="e.g. หญิงสาวเอเชีย 25 ปี ผมยาว">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">บุคลิก/ท่าทาง:</label>
-                    <textarea id="personality" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g. มั่นใจ ยิ้มบ่อย ท่าทาง energetic"></textarea>
+                    <textarea id="personality" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base" placeholder="e.g. มั่นใจ ยิ้มบ่อย ท่าทาง energetic"></textarea>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">เสื้อผ้า/สไตล์:</label>
-                    <input type="text" id="style" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g. casual modern">
+                    <input type="text" id="style" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base" placeholder="e.g. casual modern">
                 </div>
-                <button type="button" onclick="buildCharacter()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">Build & Save</button>
+                <button type="button" onclick="buildCharacter()" class="gradient-btn text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-200 text-sm sm:text-base">Build & Save</button>
             </form>
             <div id="charOutput" class="mt-4"></div>
-            <p class="text-sm text-gray-500 mt-4">ล็อค face/posture สำหรับ same face 100% ในทุก scene.</p>
+            <p class="text-xs sm:text-sm text-gray-500 mt-4">ล็อค face/posture สำหรับ same face 100% ในทุก scene.</p>
         </div>
     </div>
 
@@ -220,67 +273,211 @@
         let productData = JSON.parse(localStorage.getItem('productData')) || {};
         let imageDesc = '';
 
+        // Prompt Templates
+        const templates = {
+            caption: [
+                `ว้าวว! ลอง [PRODUCT_NAME] แล้วชีวิตดีขึ้น 100%! จากที่ [CONTEXT_PROBLEM] จนท้อ แต่เจอตัวนี้ [PRODUCT_DESC] เลย สุดยอดมาก! เหมาะกับ [AUDIENCE] แบบเราสุดๆ รีบจัดเลย! 🔥 #รีวิว[PRODUCT_NAME] #[CONTEXT]MustHave #หยุดนิ้วอยากซื้อ`,
+                `เพื่อนๆ คะ! ถ้าใครเจอปัญหา [CONTEXT_PROBLEM] ต้องลอง [PRODUCT_NAME] ด่วน! มัน [PRODUCT_DESC] แบบเห็นผลทันใจ ชีวิตง่ายขึ้นเยอะ สาวๆ [AUDIENCE] ห้ามพลาด! #รีวิว[PRODUCT_NAME] #ต้องมี`,
+                `โอ้โห [PRODUCT_NAME] ตัวนี้ปังมาก! แก้ปัญหา [CONTEXT_PROBLEM] ได้อยู่หมัด เพราะ [PRODUCT_DESC] ใครเป็น [AUDIENCE] ต้องลองเลย ซื้อเลยไม่เสียใจ! #รีวิว[PRODUCT_NAME] #[CONTEXT]Lover`
+            ],
+            video: [
+                `Create a 30-second AI video in two 15-second scenes for [PRODUCT_NAME] ad, targeting [AUDIENCE]. Use same character: [MODEL_DESC], consistent confident posture. Tone: Modern, vibrant lighting, beauty-themed.
+
+Scene 1 (15s): Hook Scene - Close-Up on character's face showing frustration with dry skin, natural movements, emotional hook.
+
+Transition: Soft fade.
+
+Scene 2 (15s): Solution Scene - Medium Shot showing [PRODUCT_DESC], character joyful, using product in chic bathroom. End with CTA smile.
+
+High-res, cinematic, realistic, drive instant purchase!`,
+                `Create a 30-second AI video for [PRODUCT_NAME], targeting [AUDIENCE]. Same character: [MODEL_DESC], energetic posture. Tone: Energetic, tech-themed backgrounds.
+
+Scene 1 (15s): Problem Scene - Wide Shot of character annoyed with slow device, tense vibe.
+
+Transition: Quick cut.
+
+Scene 2 (15s): Demonstration Scene - Slow Zoom on [PRODUCT_DESC], character excited, showcasing product in modern office. End with CTA.
+
+High-res, dynamic, make viewers want it now!`,
+                `Create a 30-second AI video for [PRODUCT_NAME], targeting [AUDIENCE]. Same character: [MODEL_DESC], warm posture. Tone: Warm, food-themed cozy kitchen.
+
+Scene 1 (15s): Hook Scene - Medium Shot of character tired from bland meals, emotional pull.
+
+Transition: Soft fade.
+
+Scene 2 (15s): Lifestyle Scene - 360 Spin showing [PRODUCT_DESC], character happy, enjoying meal with friends. End with CTA.
+
+High-res, inviting, trigger instant buy!`
+            ],
+            image: [
+                `Photorealistic image of [PRODUCT_NAME], [PRODUCT_DESC], in Modern beauty context. Featuring [MODEL_DESC] holding product confidently, soft natural light, chic background, high detail, drives purchase.`,
+                `Photorealistic image of [PRODUCT_NAME], [PRODUCT_DESC], in Elegant tech context. Featuring [MODEL_DESC] using product in sleek office, vibrant lighting, modern composition, instant buy appeal.`,
+                `Photorealistic image of [PRODUCT_NAME], [PRODUCT_DESC], in Playful food context. Featuring [MODEL_DESC] with product in cozy kitchen, warm tones, high detail, makes viewers want it now.`
+            ],
+            voice: [
+                `เออ จริงๆ นะ ฉันลอง [PRODUCT_NAME] แล้วดีมาก! มัน [PRODUCT_DESC] อะ เห็นผลชัดเลย ก่อนนี้ผิวแห้งมาก แต่ตอนนี้เนียนสุดๆ ใครเป็น [AUDIENCE] ต้องลอง ไม่ผิดหวังแน่! (~40s)`,
+                `บอกเลยว่า [PRODUCT_NAME] เปลี่ยนชีวิตฉันเลย! เพราะ [PRODUCT_DESC] ทำให้ทุกอย่างง่ายขึ้น ก่อนหนนี้เครื่องค้างตลอด แต่ตอนนี้ลื่นปรื๊ด สาวก [AUDIENCE] ต้องจัด! (~40s)`,
+                `เพื่อนๆ ฟังนี่! [PRODUCT_NAME] ดีจริง ด้วย [PRODUCT_DESC] ทำให้ชีวิตดีขึ้นเยอะ จากที่กินอะไรก็ไม่อร่อย ตอนนี้ฟินทุกมื้อ [AUDIENCE] ต้องลองนะ! (~40s)`
+            ]
+        };
+
         function showSection(sec) {
             document.querySelectorAll('div[id]').forEach(d => d.classList.add('hidden'));
             document.getElementById(sec).classList.remove('hidden');
             document.getElementById(sec).classList.add('fade-in');
-            if (sec === 'mainForm') loadProductData();
+            if (sec === 'mainForm') {
+                loadProductData();
+                updateFormStatus();
+            }
         }
 
         function saveProductData() {
+            const requiredFields = ['productName', 'productDesc', 'modelDesc', 'targetAudience', 'context'];
+            let valid = true;
+            requiredFields.forEach(field => {
+                const el = document.getElementById(field);
+                if (field === 'context') {
+                    const selected = Array.from(el.selectedOptions).map(o => o.value);
+                    if (selected.length === 0) {
+                        valid = false;
+                        el.classList.add('border-red-500');
+                    } else {
+                        el.classList.remove('border-red-500');
+                    }
+                } else if (!el.value.trim()) {
+                    valid = false;
+                    el.classList.add('border-red-500');
+                } else {
+                    el.classList.remove('border-red-500');
+                }
+            });
+            if (!valid) {
+                alert('กรุณากรอกข้อมูลที่จำเป็น (*) ให้ครบถ้วน รวมถึงเลือกบริบทอย่างน้อย 1 อัน!');
+                return;
+            }
             productData = {
                 name: document.getElementById('productName').value,
                 desc: document.getElementById('productDesc').value,
                 model: document.getElementById('modelDesc').value,
                 audience: document.getElementById('targetAudience').value,
-                tone: document.getElementById('tone').value,
+                tone: document.getElementById('tone').value || 'Modern (โมเดิร์น)',
                 context: Array.from(document.getElementById('context').selectedOptions).map(o => o.value),
-                scene1: document.getElementById('scene1').value,
-                scene2: document.getElementById('scene2').value,
-                camera1: document.getElementById('camera1').value,
-                camera2: document.getElementById('camera2').value
+                scene1: document.getElementById('scene1').value || 'Hook Scene (ฉากดึงดูดความสนใจ)',
+                scene2: document.getElementById('scene2').value || 'Solution / Product Reveal Scene (ฉากเปิดตัวสินค้า)',
+                camera1: document.getElementById('camera1').value || 'Close-Up',
+                camera2: document.getElementById('camera2').value || 'Medium Shot'
             };
             localStorage.setItem('productData', JSON.stringify(productData));
-            alert('บันทึกข้อมูลสำเร็จ! พร้อมใช้ทุกเมนู.');
+            alert('บันทึกข้อมูลสำเร็จ! พร้อม preview หรือ generate.');
+            loadProductData();
+            updateFormStatus();
         }
 
         function loadProductData() {
             Object.keys(productData).forEach(key => {
                 const el = document.getElementById(key);
-                if (el) el.value = productData[key];
+                if (el && key !== 'context') el.value = productData[key];
+            });
+            const contextEl = document.getElementById('context');
+            Array.from(contextEl.options).forEach(opt => {
+                opt.selected = productData.context && productData.context.includes(opt.value);
             });
         }
 
-        function getRandomContext() {
-            const contexts = productData.context || ['beauty'];
-            return contexts[Math.floor(Math.random() * contexts.length)];
-        }
-
-        function generateCaption() {
-            const name = productData.name || 'สินค้าสุดเจ๋ง';
-            const desc = productData.desc || 'ช่วยแก้ปัญหาได้ดีเยี่ยม';
-            const audience = productData.audience || 'คุณ';
-            const contexts = productData.context || ['general'];
-            const output = document.getElementById('captionOutput');
-            output.innerHTML = '';
-            for (let i = 0; i < 3; i++) {
-                const ctx = contexts[i % contexts.length];
-                let cap = `โอ้ยยย พอได้ลอง ${name} แล้ว ชีวิตเปลี่ยนเลยอะ! ก่อนหนนี้ ${ctx === 'beauty' ? 'ผิวแห้งกร้าน' : ctx === 'tech' ? 'มือถือช้า' : 'กินอะไรก็ไม่อร่อย'} จนเครียด แต่พอใช้ ${name} นี่ ${desc} เลย ผิวเนียนกริบ/เครื่องลื่นปรื๊ด/รสชาติสุดยอด! เห็นแล้วต้องรีบสอยเลยนะทุกคน โดยเฉพาะ ${audience} อย่างเราๆ อย่าช้าเดี๋ยวหมด! 🔥 #รีวิว${name} #${ctx.toUpperCase()}MustHave #หยุดนิ้วอยากซื้อ #${name}Review #BeautyHacks #TechLover`;
-                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-blue-600">Variation ${i+1} (${ctx}):</strong><p>${cap}</p></div>`;
+        function updateFormStatus() {
+            const status = document.getElementById('formStatus');
+            if (validateData()) {
+                status.textContent = 'ข้อมูลครบถ้วน พร้อม generate!';
+                status.classList.remove('text-red-500');
+                status.classList.add('text-emerald-600');
+            } else {
+                status.textContent = 'กรุณากรอกข้อมูลที่จำเป็นให้ครบ';
+                status.classList.remove('text-emerald-600');
+                status.classList.add('text-red-500');
             }
         }
 
+        function validateData() {
+            const required = ['name', 'desc', 'model', 'audience', 'context'];
+            return required.every(field => 
+                field === 'context' 
+                    ? productData[field] && productData[field].length > 0 
+                    : productData[field] && productData[field].trim()
+            );
+        }
+
+        function showPreview() {
+            if (!validateData()) {
+                alert('กรุณากรอกข้อมูลในฟอร์มหลักให้ครบ รวมถึงเลือกบริบทอย่างน้อย 1 อัน!');
+                showSection('mainForm');
+                return;
+            }
+            const { name, desc, model, audience, tone, context, scene1, scene2, camera1, camera2 } = productData;
+            document.getElementById('previewContent').innerHTML = `
+                <p><strong>ชื่อสินค้า:</strong> ${name}</p>
+                <p><strong>รายละเอียดสินค้า:</strong> ${desc}</p>
+                <p><strong>นางแบบ/นายแบบ:</strong> ${model}</p>
+                <p><strong>กลุ่มเป้าหมาย:</strong> ${audience}</p>
+                <p><strong>โทนภาพรวม:</strong> ${tone}</p>
+                <p><strong>บริบท:</strong> ${context.join(', ')}</p>
+                <p><strong>Scene 1:</strong> ${scene1} (${camera1})</p>
+                <p><strong>Scene 2:</strong> ${scene2} (${camera2})</p>
+                ${imageDesc ? `<p><strong>Image Analysis:</strong> ${imageDesc}</p>` : ''}
+            `;
+            showSection('preview');
+        }
+
+        function getRandomContext() {
+            return productData.context[Math.floor(Math.random() * productData.context.length)] || 'beauty';
+        }
+
+        function replaceTemplate(template, ctx) {
+            return template
+                .replace('[PRODUCT_NAME]', productData.name || 'สินค้าสุดเจ๋ง')
+                .replace('[PRODUCT_DESC]', productData.desc || 'ช่วยแก้ปัญหาได้ดีเยี่ยม')
+                .replace('[AUDIENCE]', productData.audience || 'คุณ')
+                .replace('[MODEL_DESC]', productData.model || 'young Asian woman with long black hair')
+                .replace('[CONTEXT]', ctx)
+                .replace('[CONTEXT_PROBLEM]', ctx === 'beauty' ? 'ผิวแห้งกร้าน' : ctx === 'tech' ? 'มือถือช้า' : 'กินอะไรก็ไม่อร่อย');
+        }
+
+        function generateCaption() {
+            if (!validateData()) {
+                alert('กรุณากรอกข้อมูลในฟอร์มหลักให้ครบ รวมถึงเลือกบริบทอย่างน้อย 1 อัน!');
+                showSection('mainForm');
+                return;
+            }
+            const { context } = productData;
+            const output = document.getElementById('captionOutput');
+            output.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                const ctx = context[i % context.length];
+                let cap = `โอ้ยยย พอได้ลอง ${productData.name} แล้ว ชีวิตเปลี่ยนเลยอะ! ก่อนหนนี้ ${ctx === 'beauty' ? 'ผิวแห้งกร้าน' : ctx === 'tech' ? 'มือถือช้า' : 'กินอะไรก็ไม่อร่อย'} จนเครียด แต่พอใช้ ${productData.name} นี่ ${productData.desc} เลย ผิวเนียนกริบ/เครื่องลื่นปรื๊ด/รสชาติสุดยอด! เห็นแล้วต้องรีบสอยเลยนะทุกคน โดยเฉพาะ ${productData.audience} อย่างเราๆ อย่าช้าเดี๋ยวหมด! 🔥 #รีวิว${productData.name} #${ctx.toUpperCase()}MustHave #หยุดนิ้วอยากซื้อ #${productData.name}Review #BeautyHacks #TechLover`;
+                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-indigo-600">Variation ${i+1} (${ctx}):</strong><p>${cap}</p></div>`;
+            }
+            showSection('caption');
+        }
+
+        function useCaptionTemplate() {
+            const output = document.getElementById('captionOutput');
+            output.innerHTML = '';
+            templates.caption.forEach((template, i) => {
+                const ctx = productData.context ? productData.context[i % productData.context.length] : 'beauty';
+                const cap = replaceTemplate(template, ctx);
+                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-indigo-600">Template ${i+1} (${ctx}):</strong><p>${cap}</p></div>`;
+            });
+            showSection('caption');
+        }
+
         function generateVideoPrompt() {
-            const name = productData.name || '';
-            const desc = productData.desc || '';
-            const model = productData.model || 'young Asian woman with long black hair and bright smile';
-            const tone = productData.tone || 'Modern';
-            const scene1 = productData.scene1 || 'Hook Scene';
-            const scene2 = productData.scene2 || 'Solution Scene';
-            const camera1 = productData.camera1 || 'Close-Up';
-            const camera2 = productData.camera2 || 'Medium Shot';
+            if (!validateData()) {
+                alert('กรุณากรอกข้อมูลในฟอร์มหลักให้ครบ รวมถึงเลือกบริบทอย่างน้อย 1 อัน!');
+                showSection('mainForm');
+                return;
+            }
+            const { name, desc, model, audience, tone, scene1, scene2, camera1, camera2 } = productData;
             const ctx = getRandomContext();
-            const powerfulPrompt = `Create a compelling 30-second AI video in two seamless 15-second scenes for ${name} ad, targeting ${productData.audience || 'young adults'}. Ensure 100% same face and continuity: The character is exactly ${model}, with consistent energetic posture, confident expressions, and smooth transition. Overall tone: ${tone} - vibrant lighting, ${ctx} themed backgrounds.
+            const powerfulPrompt = `Create a compelling 30-second AI video in two seamless 15-second scenes for ${name} ad, targeting ${audience}. Ensure 100% same face and continuity: The character is exactly ${model}, with consistent energetic posture, confident expressions, and smooth transition. Overall tone: ${tone} - vibrant lighting, ${ctx} themed backgrounds.
 
 Scene 1 (15s): ${scene1} - ${camera1} on the character's face showing frustration with daily problem (e.g., dry skin in beauty ctx), slow build tension, natural movements. Hook with emotional pull.
 
@@ -289,46 +486,95 @@ Transition: Soft fade to reveal product.
 Scene 2 (15s): ${scene2} - ${camera2} demonstrating ${desc}, character transforms to joyful, using ${name} effortlessly in aspirational lifestyle. End with CTA smile to camera.
 
 High-res, cinematic, realistic, engaging - make viewer crave to buy instantly!`;
-            document.getElementById('videoOutput').innerHTML = `<div class="bg-gray-100 p-4 rounded-md fade-in">${powerfulPrompt}</div><p class="text-sm text-gray-500 mt-2">คัดลอกไป VEED.IO: Paste as text-to-video idea.</p>`;
+            document.getElementById('videoOutput').innerHTML = `<div class="bg-gray-100 p-4 rounded-md fade-in">${powerfulPrompt}</div><p class="text-xs sm:text-sm text-gray-500 mt-2">คัดลอกไป VEED.IO: Paste as text-to-video idea.</p>`;
+            showSection('videoPrompt');
+        }
+
+        function useVideoTemplate() {
+            const output = document.getElementById('videoOutput');
+            output.innerHTML = '';
+            templates.video.forEach((template, i) => {
+                const ctx = productData.context ? productData.context[i % productData.context.length] : 'beauty';
+                const prompt = replaceTemplate(template, ctx);
+                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-indigo-600">Template ${i+1} (${ctx}):</strong><p>${prompt}</p></div>`;
+            });
+            output.innerHTML += `<p class="text-xs sm:text-sm text-gray-500 mt-2">คัดลอกไป VEED.IO: Paste as text-to-video idea.</p>`;
+            showSection('videoPrompt');
         }
 
         function generateImagePrompt() {
-            const name = productData.name || '';
-            const desc = productData.desc || '';
-            const model = productData.model || '';
-            const tone = productData.tone || '';
+            if (!validateData()) {
+                alert('กรุณากรอกข้อมูลในฟอร์มหลักให้ครบ รวมถึงเลือกบริบทอย่างน้อย 1 อัน!');
+                showSection('mainForm');
+                return;
+            }
+            const { name, desc, model, tone } = productData;
             const ctx = getRandomContext();
             const output = document.getElementById('imageOutput');
             output.innerHTML = '';
             for (let i = 0; i < 3; i++) {
                 const varTone = i === 0 ? tone : i === 1 ? 'Elegant' : 'Playful';
-                let imgPrompt = `Photorealistic image of ${name}, ${desc}, styled in ${varTone} ${ctx} context. Featuring ${model} holding product confidently, soft natural light, high detail, appealing composition to drive immediate purchase.`;
-                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-blue-600">Variation ${i+1}:</strong><p>${imgPrompt}</p></div>`;
+                let imgPrompt = `Photorealistic image of ${name}, ${desc}, styled in ${varTone} ${ctx} context. Featuring ${model} holding product confidently, soft natural light, high detail, appealing composition to drive immediate purchase. ${imageDesc ? 'Style based on uploaded image: ' + imageDesc : ''}`;
+                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-indigo-600">Variation ${i+1}:</strong><p>${imgPrompt}</p></div>`;
             }
-            output.innerHTML += `<p class="text-sm text-gray-500 mt-2">คัดลอกไป Raphael AI สำหรับ generate รูป.</p>`;
+            output.innerHTML += `<p class="text-xs sm:text-sm text-gray-500 mt-2">คัดลอกไป Raphael AI สำหรับ generate รูป.</p>`;
+            showSection('imagePrompt');
+        }
+
+        function useImageTemplate() {
+            const output = document.getElementById('imageOutput');
+            output.innerHTML = '';
+            templates.image.forEach((template, i) => {
+                const ctx = productData.context ? productData.context[i % productData.context.length] : 'beauty';
+                const prompt = replaceTemplate(template, ctx);
+                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-indigo-600">Template ${i+1} (${ctx}):</strong><p>${prompt}</p></div>`;
+            });
+            output.innerHTML += `<p class="text-xs sm:text-sm text-gray-500 mt-2">คัดลอกไป Raphael AI สำหรับ generate รูป.</p>`;
+            showSection('imagePrompt');
         }
 
         function generateVoiceScript() {
-            const name = productData.name || '';
-            const desc = productData.desc || '';
+            if (!validateData()) {
+                alert('กรุณากรอกข้อมูลในฟอร์มหลักให้ครบ รวมถึงเลือกบริบทอย่างน้อย 1 อัน!');
+                showSection('mainForm');
+                return;
+            }
+            const { name, desc } = productData;
             const ctx = getRandomContext();
             const output = document.getElementById('voiceOutput');
             output.innerHTML = '';
             for (let i = 0; i < 3; i++) {
                 let script = `เออ จริงๆ นะ ฉันเพิ่งได้ลอง ${name} มาได้สักพักแล้วอะ มันดีมากเลย โดยเฉพาะตรงที่ ${desc} แบบ ใช้แล้วเห็นผลชัดเจน ไม่ต้องรอตั้งนาน ก่อนหน้านี้ฉัน ${ctx === 'beauty' ? 'ผิวมันเยิ้มตลอด' : ctx === 'tech' ? 'เครื่องค้างบ่อย' : 'อาหารเสริมกินแล้วไม่อิ่ม'} จนหงุดหงิด แต่พอเปลี่ยนมาใช้นี่ ชีวิตง่ายขึ้นเยอะเลย ใครที่กำลังมองหาอะไรแบบนี้ ลองดูนะ ไม่ผิดหวังแน่ๆ ฉันใช้จริง รีวิวจริงใจ 100%`;
-                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-blue-600">Variation ${i+1} (${ctx}, ~40s):</strong><p>${script}</p></div>`;
+                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-indigo-600">Variation ${i+1} (${ctx}, ~40s):</strong><p>${script}</p></div>`;
             }
-            output.innerHTML += `<p class="text-sm text-gray-500 mt-2">บันทึกเสียง: อ่านช้าๆ ธรรมชาติ เหมือนคุยกับเพื่อน.</p>`;
+            output.innerHTML += `<p class="text-xs sm:text-sm text-gray-500 mt-2">บันทึกเสียง: อ่านช้าๆ ธรรมชาติ เหมือนคุยกับเพื่อน.</p>`;
+            showSection('voiceScript');
+        }
+
+        function useVoiceTemplate() {
+            const output = document.getElementById('voiceOutput');
+            output.innerHTML = '';
+            templates.voice.forEach((template, i) => {
+                const ctx = productData.context ? productData.context[i % productData.context.length] : 'beauty';
+                const script = replaceTemplate(template, ctx);
+                output.innerHTML += `<div class="bg-gray-100 p-4 rounded-md fade-in"><strong class="text-indigo-600">Template ${i+1} (${ctx}, ~40s):</strong><p>${script}</p></div>`;
+            });
+            output.innerHTML += `<p class="text-xs sm:text-sm text-gray-500 mt-2">บันทึกเสียง: อ่านช้าๆ ธรรมชาติ เหมือนคุยกับเพื่อน.</p>`;
+            showSection('voiceScript');
         }
 
         function generateAll() {
-            saveProductData();
+            if (!validateData()) {
+                alert('กรุณากรอกข้อมูลในฟอร์มหลักให้ครบ รวมถึงเลือกบริบทอย่างน้อย 1 อัน!');
+                showSection('mainForm');
+                return;
+            }
             generateCaption();
             generateVideoPrompt();
             generateImagePrompt();
             generateVoiceScript();
             showSection('caption');
-            alert('Generate All เสร็จ! ตรวจสอบ outputs - ใช้งานได้ 100%.');
+            alert('Generate All เสร็จ! ทุกเมนูใช้ข้อมูลเดียวกันจากฟอร์มหลัก.');
         }
 
         function previewImage() {
@@ -344,13 +590,24 @@ High-res, cinematic, realistic, engaging - make viewer crave to buy instantly!`;
         }
 
         function analyzeImage() {
-            imageDesc = 'Analyzed: Vibrant product image with model smiling, suitable for beauty ad. Add to prompt: "based on uploaded image style".';
-            document.getElementById('imageAnalysis').innerHTML = `<div class="bg-gray-100 p-4 rounded-md fade-in">${imageDescription}</div><p class="text-sm text-gray-500 mt-2">รวมใน modelDesc สำหรับ VEED.IO.</p>`;
-            productData.model += ` ${imageDesc}`;
+            if (!validateData()) {
+                alert('กรุณากรอกข้อมูลในฟอร์มหลักให้ครบ รวมถึงเลือกบริบทอย่างน้อย 1 อัน!');
+                showSection('mainForm');
+                return;
+            }
+            imageDesc = `Analyzed: Vibrant product image with model smiling, suitable for ${productData.context[0] || 'beauty'} ad. Add to prompt: "based on uploaded image style".`;
+            document.getElementById('imageAnalysis').innerHTML = `<div class="bg-gray-100 p-4 rounded-md fade-in">${imageDesc}</div><p class="text-xs sm:text-sm text-gray-500 mt-2">รวมใน modelDesc สำหรับ VEED.IO.</p>`;
+            productData.model = `${productData.model} ${imageDesc}`;
             localStorage.setItem('productData', JSON.stringify(productData));
+            document.getElementById('modelDesc').value = productData.model;
         }
 
         function buildCharacter() {
+            if (!validateData()) {
+                alert('กรุณากรอกข้อมูลในฟอร์มหลักให้ครบ รวมถึงเลือกบริบทอย่างน้อย 1 อัน!');
+                showSection('mainForm');
+                return;
+            }
             const face = document.getElementById('faceDesc').value || 'detailed face desc';
             const pers = document.getElementById('personality').value || 'confident and warm';
             const style = document.getElementById('style').value || 'casual modern';
@@ -358,11 +615,14 @@ High-res, cinematic, realistic, engaging - make viewer crave to buy instantly!`;
             document.getElementById('charOutput').innerHTML = `<div class="bg-gray-100 p-4 rounded-md fade-in">Character Desc: ${charDesc}</div>`;
             productData.model = charDesc;
             localStorage.setItem('productData', JSON.stringify(productData));
-            alert('ล็อค character สำเร็จ! ใช้ same face ในทุก scene.');
+            document.getElementById('modelDesc').value = charDesc;
+            alert('ล็อค character สำเร็จ! อัพเดทในฟอร์มหลักเรียบร้อย.');
         }
 
         // Init
         showSection('mainForm');
+        loadProductData();
+        updateFormStatus();
     </script>
 </body>
 </html>
